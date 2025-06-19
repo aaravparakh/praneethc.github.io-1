@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ name }} — CV</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 2rem auto; padding: 1rem; }
+    h1, h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.2rem; }
+    .date { float: right; color: #777; font-style: italic; }
+    ul { list-style-type: none; padding-left: 0; }
+    li { margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>{{ name }}</h1>
+  <p><strong>{{ title }}</strong><br>
+  {{ address }}<br>
+  {{ location }}<br>
+  <a href="mailto:{{ email }}">{{ email }}</a> |
+  <a href="{{ website }}">{{ website }}</a> |
+  {{ phone }}</p>
+
+  {% for section in sections %}
+    <h2>{{ section.title }}</h2>
+    <ul>
+      {% for item in section.items %}
+        <li>
+          <strong>{{ item.title }}</strong>
+          {% if item.institution %}<br><em>{{ item.institution }}</em>{% endif %}
+          {% if item.date %}<span class="date">{{ item.date }}</span>{% endif %}
+          {% if item.details %}
+            {% if item.details is string %}
+              <p>{{ item.details }}</p>
+            {% elif item.details is iterable %}
+              <ul>
+                {% for d in item.details %}
+                  <li>{{ d }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</body>
+</html>
